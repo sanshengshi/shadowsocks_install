@@ -5,7 +5,7 @@
 # https://github.com/shadowsocks/simple-obfs
 # https://github.com/shadowsocks/v2ray-plugin
 
-FROM golang:alpine AS builder
+FROM --platform=$TARGETPLATFORM golang:alpine AS builder
 RUN set -ex \
 	&& apk add --no-cache git build-base \
 	&& mkdir -p /go/src/github.com/shadowsocks \
@@ -15,7 +15,7 @@ RUN set -ex \
 	&& go get -d \
 	&& go build -o /go/bin/v2ray-plugin
 
-FROM alpine:latest
+FROM --platform=$TARGETPLATFORM alpine:latest
 LABEL maintainer="Teddysun <i@teddysun.com>"
 
 RUN runDeps="\

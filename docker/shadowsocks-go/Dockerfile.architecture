@@ -3,12 +3,12 @@
 # Reference URL:
 # https://github.com/shadowsocks/shadowsocks-go
 
-FROM golang:alpine AS builder
+FROM --platform=$TARGETPLATFORM golang:alpine AS builder
 RUN set -ex \
 	&& apk add --no-cache git build-base \
 	&& go get -u -v github.com/shadowsocks/shadowsocks-go/cmd/shadowsocks-server
 
-FROM alpine:latest
+FROM --platform=$TARGETPLATFORM alpine:latest
 LABEL maintainer="Teddysun <i@teddysun.com>"
 
 COPY --from=builder /go/bin/shadowsocks-server /usr/bin
